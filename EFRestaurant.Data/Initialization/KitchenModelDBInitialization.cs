@@ -21,6 +21,8 @@ namespace EFRestaurant.Data.Initialization
                 new KitchenModel() {Name = "Rostfrei cooking center", Price = 35000},
                 new KitchenModel() {Name = "Restaurant master deluxe", Price = 100000}
             };
+            context.KitchenModels.AddRange(kitchenModels);
+            base.Seed(context);
         }
     }
 }
