@@ -49,6 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Initialization\KitchenModelDBInitialization.cs" />
+    <Compile Include="Models\Entities\Employee.cs" />
+    <Compile Include="Models\Entities\Ingredient.cs" />
+    <Compile Include="Models\Entities\KitchenModel.cs" />
+    <Compile Include="Models\Entities\Recipe.cs" />
+    <Compile Include="Models\Entities\Restaurant.cs" />
+    <Compile Include="Models\RestaurantContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
