@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EFRestaurant.Data.Models.Entities;
 
 namespace EFRestaurant.Data.Models.Entities
 {
@@ -26,8 +27,7 @@ namespace EFRestaurant.Data.Models.Entities
 
         public Roles EmployeeRole { get; set; }
 
-        public Restaurant Restaurant { get; set; }
-
-        public Restaurant RestaurantId { get; set; }
+        public int RestaurantId { get; set; }
+        public virtual Restaurant Restaurant { get; set; }
     }
 }

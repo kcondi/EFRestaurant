@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EFRestaurant.Data.Models;
+using EFRestaurant.Data.Models.Entities;
 
 namespace EFRestaurant.Presentation
 {
@@ -15,16 +17,14 @@ namespace EFRestaurant.Presentation
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
+            var context = new RestaurantContext();
+            context.Restaurants.Add(new Restaurant() { Name = "Vuka", KitchenModelId = 2 });
+            context.SaveChanges();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+             
         }
     }
 }

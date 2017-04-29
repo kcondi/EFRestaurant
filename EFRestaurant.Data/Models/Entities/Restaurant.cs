@@ -10,10 +10,11 @@ namespace EFRestaurant.Data.Models.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public KitchenModel KitchenModel { get; set; }
-        public KitchenModel KitchenModelId { get; set; }
         public ICollection<Employee> Employees { get; set; }
 
         public ICollection<Recipe> Recipes { get; set; }
+
+        public int KitchenModelId { get; set; }
+        public virtual KitchenModel KitchenModel { get; set; }
     }
 }

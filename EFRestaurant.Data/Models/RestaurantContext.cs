@@ -16,11 +16,11 @@ namespace EFRestaurant.Data.Models
             Database.SetInitializer(new KitchenModelDBInitialization());
         }
 
-        public DbSet <Restaurant> Restaurants { get; set; }
-        public DbSet <Employee> Employees { get; set; }
-        public DbSet <KitchenModel> KitchenModels { get; set; }
-        public DbSet <Recipe> Recipes { get; set; }
-        public DbSet <Ingredient> Ingredients { get; set; }
+        public virtual DbSet<Restaurant> Restaurants { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<KitchenModel> KitchenModels { get; set; }
+        public virtual DbSet<Recipe> Recipes { get; set; }
+        public virtual DbSet<Ingredient> Ingredients { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

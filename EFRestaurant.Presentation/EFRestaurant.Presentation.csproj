@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5CEF6CFA-FF88-45AE-8DA8-D7167D9DC734}</ProjectGuid>
+    <ProjectGuid>{33E7E3D0-EEC4-441C-91F5-D04E7A9BA9C9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EFRestaurant.Presentation</RootNamespace>
