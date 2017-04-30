@@ -9,7 +9,7 @@ using EFRestaurant.Data.Models.Entities;
 
 namespace EFRestaurant.Data.Initialization
 {
-    public class KitchenModelDBInitialization : DropCreateDatabaseAlways<RestaurantContext>
+    public class KitchenModelDBInitialization : CreateDatabaseIfNotExists<RestaurantContext>
     {
         protected override void Seed(RestaurantContext context)
         {
