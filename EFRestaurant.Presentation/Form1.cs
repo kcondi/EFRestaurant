@@ -52,33 +52,39 @@ namespace EFRestaurant.Presentation
 
         private void RestaurantListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            IngredientsList.Clear();
             var selectedRestaurantName = RestaurantListBox.Text;
-            var selectedRestaurant = _context.Restaurants.Include(restaurant=>restaurant.Employees).FirstOrDefault(x => x.Name == selectedRestaurantName);
+            var selectedRestaurant = _context.Restaurants.Include(restaurant => restaurant.Employees).Include(restaurant => restaurant.Recipes).FirstOrDefault(x => x.Name == selectedRestaurantName);
 
             if (selectedRestaurant == null) return;
 
-            KitchenModelLabel.Text = selectedRestaurant.KitchenModel.Name+", price: "+selectedRestaurant.KitchenModel.Price;
+            KitchenModelLabel.Text = selectedRestaurant.KitchenModel.Name + ", price: " + selectedRestaurant.KitchenModel.Price;
 
-            var employees = new BindingList<Employee>();
+            var employees = new BindingList<string>();
 
             foreach (var employee in selectedRestaurant.Employees)
             {
-                    employees.Add(employee);
+                employees.Add(employee.OIB + " " + employee.FirstName + " " + employee.LastName+" "+employee.BirthYear);
             }
+
             EmployeeListBox.DataSource = employees;
-            EmployeeListBox.DisplayMember = "OIB";
+
+            var recipes = new BindingList<Recipe>();
 
             foreach (var recipe in selectedRestaurant.Recipes)
             {
-                RecipeListBox.Items.Add(recipe.Name + " " + recipe.PreparationTime);
-                EmployeeListBox.Refresh();
+                recipes.Add(recipe);
             }
+
+            RecipeListBox.DataSource = recipes;
+            RecipeListBox.DisplayMember = "Name";
         }
 
         private void RecipeListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            IngredientsList.Clear();
             var selectedRecipeName = RecipeListBox.Text;
-            var selectedRecipe = _context.Recipes.FirstOrDefault(x => x.Name == selectedRecipeName);
+            var selectedRecipe = _context.Recipes.Include(recipe=>recipe.Ingredients).FirstOrDefault(x => x.Name == selectedRecipeName);
 
             if (selectedRecipe == null) return;
 
@@ -108,6 +114,38 @@ namespace EFRestaurant.Presentation
         {
             Form4 newEmployeeDialog=new Form4(_context,RestaurantListBox.Text);
             newEmployeeDialog.ShowDialog();
+        }
+
+        private void DeleteEmployeeButton_Click(object sender, EventArgs e)
+        {
+            var selectedEmployeeOIB = EmployeeListBox.Text.Substring(0,EmployeeListBox.Text.IndexOf(' '));
+            var employeeToDelete = _context.Employees.Find(selectedEmployeeOIB);
+            if (employeeToDelete == null)
+                return;
+            _context.Employees.Remove(employeeToDelete);
+            _context.SaveChanges();
+        }
+
+        private void EditEmployeeButton_Click(object sender, EventArgs e)
+        {
+            Form5 editEmployeeDialog=new Form5(_context,EmployeeListBox.Text,RestaurantListBox.Text);
+            editEmployeeDialog.ShowDialog();
+        }
+
+        private void AddRecipeButton_Click(object sender, EventArgs e)
+        {
+            Form6 addRecipeDialog = new Form6(_context,RestaurantListBox.Text);
+            addRecipeDialog.ShowDialog();
+        }
+
+        private void DeleteRecipeButton_Click(object sender, EventArgs e)
+        {
+            var selectedRecipeName = RecipeListBox.Text;
+            var recipeToDelete = _context.Recipes.FirstOrDefault(x => x.Name == selectedRecipeName);
+            if (recipeToDelete == null)
+                return;
+            _context.Recipes.Remove(recipeToDelete);
+            _context.SaveChanges();
         }
     }
 }

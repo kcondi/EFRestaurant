@@ -23,6 +23,6 @@ namespace EFRestaurant.Data.Models.Entities
         public  ICollection<Recipe> Recipes { get; set; }
 
         public int KitchenModelId { get; set; }
-        public virtual KitchenModel KitchenModel { get; set; }
+        public  virtual KitchenModel KitchenModel { get; set; }
     }
 }

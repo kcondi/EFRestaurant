@@ -58,10 +58,7 @@ namespace EFRestaurant.Presentation
                     return;
                 }
 
-              //  temporaryRestaurant.Employees.Add(employeeToAdd);
-
                 temporaryRestaurant.Employees.Add(employeeToAdd);
-                _context.Entry(temporaryRestaurant).State = EntityState.Modified;
                 _context.Employees.Add(employeeToAdd);
                 _context.SaveChanges();
 
