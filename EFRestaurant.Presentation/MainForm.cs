@@ -14,7 +14,6 @@ namespace EFRestaurant.Presentation
         {
             InitializeComponent();
             _context = new RestaurantContext();
-
         }
 
         private readonly RestaurantContext _context;
@@ -95,6 +94,9 @@ namespace EFRestaurant.Presentation
 
         private void DeleteRestaurantButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(RestaurantListBox.Text))
+                return;
+
             var selectedRestaurantName = RestaurantListBox.Text;
             var restaurantToDelete = _context.Restaurants.FirstOrDefault(restaurant=>restaurant.Name==selectedRestaurantName);
 
@@ -107,18 +109,27 @@ namespace EFRestaurant.Presentation
 
         private void EditRestaurantButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(RestaurantListBox.Text))
+                return;
+
             var editRestaurantDialog = new EditRestaurantForm(_context,RestaurantListBox.Text);
             editRestaurantDialog.ShowDialog();
         }
 
         private void AddEmployeeButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(RestaurantListBox.Text))
+                return;
+
             var newEmployeeDialog=new AddEmployeeForm(_context,RestaurantListBox.Text);
             newEmployeeDialog.ShowDialog();
         }
 
         private void DeleteEmployeeButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(EmployeeListBox.Text))
+                return;
+
             var selectedEmployeeOIB = EmployeeListBox.Text.Substring(0,EmployeeListBox.Text.IndexOf(' '));
             var employeeToDelete = _context.Employees.Find(selectedEmployeeOIB);
 
@@ -131,18 +142,27 @@ namespace EFRestaurant.Presentation
 
         private void EditEmployeeButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(EmployeeListBox.Text))
+                return;
+
             var editEmployeeDialog=new EditEmployeeForm(_context,EmployeeListBox.Text,RestaurantListBox.Text);
             editEmployeeDialog.ShowDialog();
         }
 
         private void AddRecipeButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(RestaurantListBox.Text))
+                return;
+
             var addRecipeDialog = new AddRecipeForm(_context,RestaurantListBox.Text);
             addRecipeDialog.ShowDialog();
         }
 
         private void DeleteRecipeButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(RecipeListBox.Text))
+                return;
+
             var selectedRecipeName = RecipeListBox.Text;
             var recipeToDelete = _context.Recipes.FirstOrDefault(recipe => recipe.Name == selectedRecipeName);
 

@@ -50,7 +50,7 @@ namespace EFRestaurant.Presentation
             var recipeToAdd = new Recipe
             {
                 Name = RecipeNameTextBoxAddRecipe.Text,
-                PreparationTime = (int.Parse(HoursMaskedTextBoxAddRecipe.Text))*60+int.Parse(MinutesMaskedTextBoxAddRecipe.Text)
+                PreparationTime = int.Parse(HoursMaskedTextBoxAddRecipe.Text)*60+int.Parse(MinutesMaskedTextBoxAddRecipe.Text)
             };
 
             foreach(var ingredient in _ingredientsToAdd)
@@ -86,6 +86,8 @@ namespace EFRestaurant.Presentation
             _context.Ingredients.Add(newIngredientToAdd);
 
             _context.SaveChanges();
+
+            AddNewIngredientTextBoxAddRecipe.Clear();
         }
 
         private void AddExistingRecipeButton_Click(object sender, EventArgs e)
