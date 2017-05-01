@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -57,8 +58,10 @@ namespace EFRestaurant.Presentation
                     return;
                 }
 
-                temporaryRestaurant.Employees.Add(employeeToAdd);
+              //  temporaryRestaurant.Employees.Add(employeeToAdd);
 
+                temporaryRestaurant.Employees.Add(employeeToAdd);
+                _context.Entry(temporaryRestaurant).State = EntityState.Modified;
                 _context.Employees.Add(employeeToAdd);
                 _context.SaveChanges();
 

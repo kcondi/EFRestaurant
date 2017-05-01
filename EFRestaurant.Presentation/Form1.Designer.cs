@@ -86,7 +86,6 @@
             this.label2.Size = new System.Drawing.Size(183, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Employees in the selected restaurant:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // AddEmployeeButton
             // 
@@ -180,7 +179,7 @@
             this.AddRestaurantButton.Text = "Add";
             this.toolTip1.SetToolTip(this.AddRestaurantButton, "Add a new restaurant.");
             this.AddRestaurantButton.UseVisualStyleBackColor = true;
-            this.AddRestaurantButton.Click += new System.EventHandler(this.button1_Click);
+            this.AddRestaurantButton.Click += new System.EventHandler(this.AddRestaurantButton_Click);
             // 
             // EditRestaurantButton
             // 
