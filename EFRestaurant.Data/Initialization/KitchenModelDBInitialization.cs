@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
 
 namespace EFRestaurant.Data.Initialization
 {
-    public class KitchenModelDBInitialization : CreateDatabaseIfNotExists<RestaurantContext>
+    public class KitchenModelDbInitialization : CreateDatabaseIfNotExists<RestaurantContext>
     {
         protected override void Seed(RestaurantContext context)
         {

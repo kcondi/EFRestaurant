@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
@@ -18,17 +9,14 @@ namespace EFRestaurant.Presentation
     {
         public AddRestaurantForm(RestaurantContext context)
         {
-            _context = context;
             InitializeComponent();
+
+            _context = context;
+
             KitchenModelComboBox.SelectedIndex = 0;
         }
 
         private readonly RestaurantContext _context;
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void OkButtonNewRestaurant_Click(object sender, EventArgs e)
         {
             var newRestaurantName = NewRestaurantTextBox.Text;
@@ -58,7 +46,6 @@ namespace EFRestaurant.Presentation
             _context.SaveChanges();
         
             Close();
-
         }
     }
 }

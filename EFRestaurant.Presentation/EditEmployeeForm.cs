@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
@@ -16,20 +10,26 @@ namespace EFRestaurant.Presentation
     {
         public EditEmployeeForm(RestaurantContext context, string employeeToEditInfo, string restaurantOfEmployee)
         {
-            _context = context;
             InitializeComponent();
+
+            _context = context;            
             _restaurantOfEmployeeName = restaurantOfEmployee;
-            employeeInfoStrings = employeeToEditInfo.Split(null);
-            OIBTextBoxEditEmployee.Text = employeeInfoStrings[0];
+
+            _employeeInfoStrings = employeeToEditInfo.Split(null);
+
+            OIBTextBoxEditEmployee.Text = _employeeInfoStrings[0];
             OIBTextBoxEditEmployee.Enabled = false;
-            FirstNameTextBoxEditEmployee.Text = employeeInfoStrings[1];
-            LastNameTextBoxEditEmployee.Text = employeeInfoStrings[2];
-            BirthYearUpDownEditEmployee.Value = int.Parse(employeeInfoStrings[3]);
+
+            FirstNameTextBoxEditEmployee.Text = _employeeInfoStrings[1];
+            LastNameTextBoxEditEmployee.Text = _employeeInfoStrings[2];
+            BirthYearUpDownEditEmployee.Value = int.Parse(_employeeInfoStrings[3]);
+
             MasterChefRadioEditEmployee.Checked = true;
         }
+
         private readonly RestaurantContext _context;
         private readonly string _restaurantOfEmployeeName;
-        private readonly string[] employeeInfoStrings;
+        private readonly string[] _employeeInfoStrings;
 
         private void OkButtonEditEmployee_Click(object sender, EventArgs e)
         {
@@ -38,9 +38,15 @@ namespace EFRestaurant.Presentation
                 MessageBox.Show("Last name is a required field!");
             else
             {
-                var temporaryRestaurant = _context.Restaurants.FirstOrDefault(x => x.Name == _restaurantOfEmployeeName);
+                var restaurantOfEmployeeToEdit = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == _restaurantOfEmployeeName);
 
-                var employeeToEdit = _context.Employees.Find(employeeInfoStrings[0]);
+                if (restaurantOfEmployeeToEdit == null)
+                {
+                    Close();
+                    return;
+                }
+
+                var employeeToEdit = _context.Employees.Find(_employeeInfoStrings[0]);
 
                 if (employeeToEdit == null)
                 {
@@ -59,26 +65,10 @@ namespace EFRestaurant.Presentation
                 else
                     employeeToEdit.EmployeeRole = Roles.Waiter;
 
-                if (temporaryRestaurant == null)
-                {
-                    Close();
-                    return;
-                }
                 _context.SaveChanges();
 
                 Close();
             }
-        }
-
-        private bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
         }
     }
 }

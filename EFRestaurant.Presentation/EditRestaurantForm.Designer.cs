@@ -67,7 +67,6 @@
             this.KitchenModelComboBox.Name = "KitchenModelComboBox";
             this.KitchenModelComboBox.Size = new System.Drawing.Size(140, 21);
             this.KitchenModelComboBox.TabIndex = 2;
-            this.KitchenModelComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 

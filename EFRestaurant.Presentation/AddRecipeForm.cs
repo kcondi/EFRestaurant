@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
@@ -16,33 +12,36 @@ namespace EFRestaurant.Presentation
     {
         public AddRecipeForm(RestaurantContext context, string restaurantOfRecipe)
         {
-            _restaurantOfRecipeName = restaurantOfRecipe;
+            InitializeComponent();
+
             _context = context;
-                        InitializeComponent();
+            _restaurantOfRecipeName = restaurantOfRecipe;
+            _ingredientsToAdd = new List<Ingredient>();
+
             var ingredients = new BindingList<Ingredient>();
             foreach (var ingredient in _context.Ingredients)
                 ingredients.Add(ingredient);
+
             ExistingIngredientsListBox.DataSource = ingredients;
             ExistingIngredientsListBox.DisplayMember = "Name";
 
             var recipes = new BindingList<Recipe>();
             foreach (var recipe in _context.Recipes)
                 recipes.Add(recipe);
+
             ExistingRecipesListBox.DataSource = recipes;
             ExistingRecipesListBox.DisplayMember = "Name";
-
-            _ingredientsToAdd=new List<Ingredient>();
         }
 
-        private readonly string _restaurantOfRecipeName;
         private readonly RestaurantContext _context;
+        private readonly string _restaurantOfRecipeName;
         private readonly List<Ingredient> _ingredientsToAdd;
 
         private void AddNewRecipeButton_Click(object sender, EventArgs e)
         {
-            var recipeRestaurant = _context.Restaurants.FirstOrDefault(x => x.Name == _restaurantOfRecipeName);
+            var restaurantOfRecipe = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == _restaurantOfRecipeName);
 
-            if (recipeRestaurant == null)
+            if (restaurantOfRecipe == null)
             {
                 Close();
                 return;
@@ -57,7 +56,7 @@ namespace EFRestaurant.Presentation
             foreach(var ingredient in _ingredientsToAdd)
                 recipeToAdd.Ingredients.Add(ingredient);
 
-            recipeRestaurant.Recipes.Add(recipeToAdd);
+            restaurantOfRecipe.Recipes.Add(recipeToAdd);
             _context.Recipes.Add(recipeToAdd);
 
             _context.SaveChanges();
@@ -67,41 +66,41 @@ namespace EFRestaurant.Presentation
 
         private void AddExistingIngredientButtonAddRecipe_Click(object sender, EventArgs e)
         {
-            var ingredientToAdd = _context.Ingredients.FirstOrDefault(x=>x.Name==ExistingIngredientsListBox.Text);
+            var existingIngredientToAdd = _context.Ingredients.FirstOrDefault(ingredient => ingredient.Name == ExistingIngredientsListBox.Text);
 
-            if (ingredientToAdd == null)
+            if (existingIngredientToAdd == null)
                 return;
 
-            _ingredientsToAdd.Add(ingredientToAdd);
+            _ingredientsToAdd.Add(existingIngredientToAdd);
         }
 
         private void AddNewIngredientButtonAddRecipe_Click(object sender, EventArgs e)
         {
-            var ingredientToAdd = new Ingredient
+            var newIngredientToAdd = new Ingredient
             {
                 Name = AddNewIngredientTextBoxAddRecipe.Text
             };
 
-            _ingredientsToAdd.Add(ingredientToAdd);
+            _ingredientsToAdd.Add(newIngredientToAdd);
 
-            _context.Ingredients.Add(ingredientToAdd);
+            _context.Ingredients.Add(newIngredientToAdd);
 
             _context.SaveChanges();
         }
 
         private void AddExistingRecipeButton_Click(object sender, EventArgs e)
         {
-            var recipeRestaurant = _context.Restaurants.FirstOrDefault(x => x.Name == _restaurantOfRecipeName);
+            var restaurantOfRecipe = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == _restaurantOfRecipeName);
 
-            if (recipeRestaurant == null)
+            if (restaurantOfRecipe == null)
             {
                 Close();
                 return;
             }
 
-            var existingRecipeToAdd = _context.Recipes.FirstOrDefault(x => x.Name == ExistingRecipesListBox.Text);
+            var existingRecipeToAdd = _context.Recipes.FirstOrDefault(recipe => recipe.Name == ExistingRecipesListBox.Text);
 
-            recipeRestaurant.Recipes.Add(existingRecipeToAdd);
+            restaurantOfRecipe.Recipes.Add(existingRecipeToAdd);
 
             _context.SaveChanges();
 
@@ -110,7 +109,7 @@ namespace EFRestaurant.Presentation
 
         private void DeleteIngredientButton_Click(object sender, EventArgs e)
         {
-            var ingredientToDelete = _context.Ingredients.FirstOrDefault(x => x.Name == ExistingIngredientsListBox.Text);
+            var ingredientToDelete = _context.Ingredients.FirstOrDefault(ingredient => ingredient.Name == ExistingIngredientsListBox.Text);
 
             if (ingredientToDelete == null)
                 return;

@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Initialization\KitchenModelDBInitialization.cs" />
+    <Compile Include="Initialization\KitchenModelDbInitialization.cs" />
     <Compile Include="Models\Entities\Employee.cs" />
     <Compile Include="Models\Entities\Ingredient.cs" />
     <Compile Include="Models\Entities\KitchenModel.cs" />

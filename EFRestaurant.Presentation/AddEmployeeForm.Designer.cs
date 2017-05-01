@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEmployeeForm));
-            this.OIBTextBoxAddEmployee = new System.Windows.Forms.TextBox();
             this.FirstNameTextBoxAddEmployee = new System.Windows.Forms.TextBox();
             this.LastNameTextBoxAddEmployee = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,16 +41,10 @@
             this.WaiterRadioAddEmployee = new System.Windows.Forms.RadioButton();
             this.EmployeeRoleGroupBoxAddEmployee = new System.Windows.Forms.GroupBox();
             this.OkButtonAddEmployee = new System.Windows.Forms.Button();
+            this.OIBMaskedTextBoxAddEmployee = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.BirthYearUpDownAddEmployee)).BeginInit();
             this.EmployeeRoleGroupBoxAddEmployee.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // OIBTextBoxAddEmployee
-            // 
-            this.OIBTextBoxAddEmployee.Location = new System.Drawing.Point(140, 28);
-            this.OIBTextBoxAddEmployee.Name = "OIBTextBoxAddEmployee";
-            this.OIBTextBoxAddEmployee.Size = new System.Drawing.Size(120, 20);
-            this.OIBTextBoxAddEmployee.TabIndex = 0;
             // 
             // FirstNameTextBoxAddEmployee
             // 
@@ -181,11 +174,20 @@
             this.OkButtonAddEmployee.UseVisualStyleBackColor = true;
             this.OkButtonAddEmployee.Click += new System.EventHandler(this.OkButtonAddEmployee_Click);
             // 
-            // Form4
+            // OIBMaskedTextBoxAddEmployee
+            // 
+            this.OIBMaskedTextBoxAddEmployee.Location = new System.Drawing.Point(140, 25);
+            this.OIBMaskedTextBoxAddEmployee.Mask = "00000000000";
+            this.OIBMaskedTextBoxAddEmployee.Name = "OIBMaskedTextBoxAddEmployee";
+            this.OIBMaskedTextBoxAddEmployee.Size = new System.Drawing.Size(120, 20);
+            this.OIBMaskedTextBoxAddEmployee.TabIndex = 13;
+            // 
+            // AddEmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(401, 316);
+            this.Controls.Add(this.OIBMaskedTextBoxAddEmployee);
             this.Controls.Add(this.OkButtonAddEmployee);
             this.Controls.Add(this.EmployeeRoleGroupBoxAddEmployee);
             this.Controls.Add(this.label4);
@@ -195,9 +197,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.LastNameTextBoxAddEmployee);
             this.Controls.Add(this.FirstNameTextBoxAddEmployee);
-            this.Controls.Add(this.OIBTextBoxAddEmployee);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form4";
+            this.Name = "AddEmployeeForm";
             this.Text = "Add new employee";
             ((System.ComponentModel.ISupportInitialize)(this.BirthYearUpDownAddEmployee)).EndInit();
             this.EmployeeRoleGroupBoxAddEmployee.ResumeLayout(false);
@@ -208,8 +209,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox OIBTextBoxAddEmployee;
         private System.Windows.Forms.TextBox FirstNameTextBoxAddEmployee;
         private System.Windows.Forms.TextBox LastNameTextBoxAddEmployee;
         private System.Windows.Forms.Label label1;
@@ -222,5 +221,6 @@
         private System.Windows.Forms.RadioButton WaiterRadioAddEmployee;
         private System.Windows.Forms.GroupBox EmployeeRoleGroupBoxAddEmployee;
         private System.Windows.Forms.Button OkButtonAddEmployee;
+        private System.Windows.Forms.MaskedTextBox OIBMaskedTextBoxAddEmployee;
     }
 }

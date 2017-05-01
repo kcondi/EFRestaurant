@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
@@ -24,7 +19,7 @@ namespace EFRestaurant.Presentation
 
         private readonly RestaurantContext _context;
     
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             var restaurants=new BindingList<Restaurant>();
            
@@ -53,10 +48,12 @@ namespace EFRestaurant.Presentation
         private void RestaurantListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             IngredientsList.Clear();
-            var selectedRestaurantName = RestaurantListBox.Text;
-            var selectedRestaurant = _context.Restaurants.Include(restaurant => restaurant.Employees).Include(restaurant => restaurant.Recipes).FirstOrDefault(x => x.Name == selectedRestaurantName);
 
-            if (selectedRestaurant == null) return;
+            var selectedRestaurantName = RestaurantListBox.Text;
+            var selectedRestaurant = _context.Restaurants.Include(restaurant => restaurant.Employees).Include(restaurant => restaurant.Recipes).FirstOrDefault(restaurant => restaurant.Name == selectedRestaurantName);
+
+            if (selectedRestaurant == null)
+                return;
 
             KitchenModelLabel.Text = selectedRestaurant.KitchenModel.Name + ", price: " + selectedRestaurant.KitchenModel.Price;
 
@@ -83,10 +80,12 @@ namespace EFRestaurant.Presentation
         private void RecipeListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             IngredientsList.Clear();
-            var selectedRecipeName = RecipeListBox.Text;
-            var selectedRecipe = _context.Recipes.Include(recipe=>recipe.Ingredients).FirstOrDefault(x => x.Name == selectedRecipeName);
 
-            if (selectedRecipe == null) return;
+            var selectedRecipeName = RecipeListBox.Text;
+            var selectedRecipe = _context.Recipes.Include(recipe=>recipe.Ingredients).FirstOrDefault(recipe => recipe.Name == selectedRecipeName);
+
+            if (selectedRecipe == null)
+                return;
 
             foreach (var ingredient in selectedRecipe.Ingredients)
             {
@@ -97,9 +96,11 @@ namespace EFRestaurant.Presentation
         private void DeleteRestaurantButton_Click(object sender, EventArgs e)
         {
             var selectedRestaurantName = RestaurantListBox.Text;
-            var restaurantToDelete = _context.Restaurants.FirstOrDefault(x=>x.Name==selectedRestaurantName);
+            var restaurantToDelete = _context.Restaurants.FirstOrDefault(restaurant=>restaurant.Name==selectedRestaurantName);
+
             if (restaurantToDelete == null)
                 return;
+
             _context.Restaurants.Remove(restaurantToDelete);
             _context.SaveChanges();
         }
@@ -120,8 +121,10 @@ namespace EFRestaurant.Presentation
         {
             var selectedEmployeeOIB = EmployeeListBox.Text.Substring(0,EmployeeListBox.Text.IndexOf(' '));
             var employeeToDelete = _context.Employees.Find(selectedEmployeeOIB);
+
             if (employeeToDelete == null)
                 return;
+
             _context.Employees.Remove(employeeToDelete);
             _context.SaveChanges();
         }
@@ -141,9 +144,11 @@ namespace EFRestaurant.Presentation
         private void DeleteRecipeButton_Click(object sender, EventArgs e)
         {
             var selectedRecipeName = RecipeListBox.Text;
-            var recipeToDelete = _context.Recipes.FirstOrDefault(x => x.Name == selectedRecipeName);
+            var recipeToDelete = _context.Recipes.FirstOrDefault(recipe => recipe.Name == selectedRecipeName);
+
             if (recipeToDelete == null)
                 return;
+
             _context.Recipes.Remove(recipeToDelete);
             _context.SaveChanges();
         }

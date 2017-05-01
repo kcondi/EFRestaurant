@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using EFRestaurant.Data.Initialization;
 using EFRestaurant.Data.Models.Entities;
 
@@ -13,7 +8,7 @@ namespace EFRestaurant.Data.Models
     {
         public RestaurantContext() : base("RestaurantDatabase")
         {
-            Database.SetInitializer(new KitchenModelDBInitialization());
+            Database.SetInitializer(new KitchenModelDbInitialization());
         }
 
         public virtual DbSet<Restaurant> Restaurants { get; set; }

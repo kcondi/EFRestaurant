@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
@@ -17,9 +10,11 @@ namespace EFRestaurant.Presentation
     {
         public AddEmployeeForm(RestaurantContext context, string restaurantOfEmployee )
         {
+            InitializeComponent();
+
             _context = context;
             _restaurantOfEmployeeName = restaurantOfEmployee;
-            InitializeComponent();
+
             MasterChefRadioAddEmployee.Checked = true;
         }
 
@@ -28,18 +23,25 @@ namespace EFRestaurant.Presentation
 
         private void OkButtonAddEmployee_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(OIBTextBoxAddEmployee.Text))
+            if (string.IsNullOrEmpty(OIBMaskedTextBoxAddEmployee.Text))
                 MessageBox.Show("OIB is a required field!");
-            else if (!IsDigitsOnly(OIBTextBoxAddEmployee.Text) || OIBTextBoxAddEmployee.Text.Length != 11)
-                MessageBox.Show("The entered OIB is not valid. \n It must comprise of exactly 11 strictly numerical characters.");
+            else if (OIBMaskedTextBoxAddEmployee.Text.Length != 11)
+                MessageBox.Show("An OIB must have 11 characters!");
             else if (string.IsNullOrEmpty(LastNameTextBoxAddEmployee.Text))
                 MessageBox.Show("Last name is a required field!");
             else
             {
-                var temporaryRestaurant = _context.Restaurants.FirstOrDefault(x => x.Name == _restaurantOfEmployeeName);
+                var restaurantOfEmployee = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == _restaurantOfEmployeeName);
+
+                if (restaurantOfEmployee == null)
+                {
+                    Close();
+                    return;
+                }
+
                 var employeeToAdd = new Employee
                 {
-                    OIB = OIBTextBoxAddEmployee.Text,
+                    OIB = OIBMaskedTextBoxAddEmployee.Text,
                     FirstName = FirstNameTextBoxAddEmployee.Text,
                     LastName = LastNameTextBoxAddEmployee.Text,
                     BirthYear = (int)BirthYearUpDownAddEmployee.Value   
@@ -50,31 +52,15 @@ namespace EFRestaurant.Presentation
                 else if (AssistantChefRadioAddEmployee.Checked)
                     employeeToAdd.EmployeeRole = Roles.AssistantChef;
                 else
-                    employeeToAdd.EmployeeRole = Roles.Waiter;
+                    employeeToAdd.EmployeeRole = Roles.Waiter;             
 
-                if (temporaryRestaurant == null)
-                {
-                    Close();
-                    return;
-                }
-
-                temporaryRestaurant.Employees.Add(employeeToAdd);
+                restaurantOfEmployee.Employees.Add(employeeToAdd);
                 _context.Employees.Add(employeeToAdd);
+
                 _context.SaveChanges();
 
                 Close();
             }
-        }
-
-        private bool IsDigitsOnly(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-
-            return true;
         }
     }
 }
