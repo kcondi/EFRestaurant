@@ -18,9 +18,7 @@ namespace EFRestaurant.Presentation
             _restaurantOfRecipeName = restaurantOfRecipe;
             _ingredientsToAdd = new List<Ingredient>();
 
-            var ingredients = new BindingList<Ingredient>();
-            foreach (var ingredient in _context.Ingredients)
-                ingredients.Add(ingredient);
+            var ingredients = RetrieveIngredients();
 
             ExistingIngredientsListBox.DataSource = ingredients;
             ExistingIngredientsListBox.DisplayMember = "Name";
@@ -37,6 +35,14 @@ namespace EFRestaurant.Presentation
         private readonly string _restaurantOfRecipeName;
         private readonly List<Ingredient> _ingredientsToAdd;
 
+        private BindingList<Ingredient> RetrieveIngredients()
+        {
+            var ingredients = new BindingList<Ingredient>();
+            foreach (var ingredient in _context.Ingredients)
+                ingredients.Add(ingredient);
+
+            return ingredients;
+        }
         private void AddNewRecipeButton_Click(object sender, EventArgs e)
         {
             var restaurantOfRecipe = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == _restaurantOfRecipeName);
@@ -88,6 +94,9 @@ namespace EFRestaurant.Presentation
             _context.SaveChanges();
 
             AddNewIngredientTextBoxAddRecipe.Clear();
+
+            var ingredients = RetrieveIngredients();
+            ExistingIngredientsListBox.DataSource = ingredients;
         }
 
         private void AddExistingRecipeButton_Click(object sender, EventArgs e)
@@ -119,6 +128,9 @@ namespace EFRestaurant.Presentation
             _context.Ingredients.Remove(ingredientToDelete);
 
             _context.SaveChanges();
+
+            var ingredients = RetrieveIngredients();
+            ExistingIngredientsListBox.DataSource = ingredients;
         }
     }
 }
