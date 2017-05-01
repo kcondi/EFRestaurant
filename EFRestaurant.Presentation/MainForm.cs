@@ -37,37 +37,10 @@ namespace EFRestaurant.Presentation
 
         return restaurants;
         }
-
-        private BindingList<string> RetrieveEmployees(IEnumerable<Employee> employeeList)
-        {
-            var employees = new BindingList<string>();
-
-            foreach (var employee in employeeList)
-            {
-                employees.Add(employee.OIB + " " + employee.FirstName + " " + employee.LastName + " " + employee.BirthYear);
-            }
-
-            return employees;
-        }
-
-        private BindingList<Recipe> RetrieveRecipes(IEnumerable<Recipe> recipeList)
-        {
-            var recipes = new BindingList<Recipe>();
-
-            foreach (var recipe in recipeList)
-            {
-                recipes.Add(recipe);
-            }
-
-            return recipes;
-        }
         private void MainForm_Load(object sender, EventArgs e)
         {
             
         }
-
-
-
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
@@ -96,11 +69,21 @@ namespace EFRestaurant.Presentation
 
             KitchenModelLabel.Text = selectedRestaurant.KitchenModel.Name + ", price: " + selectedRestaurant.KitchenModel.Price;
 
-            var employees = RetrieveEmployees(selectedRestaurant.Employees);
+            var employees = new BindingList<string>();
+
+            foreach (var employee in selectedRestaurant.Employees)
+            {
+                employees.Add(employee.OIB + " " + employee.FirstName + " " + employee.LastName + " " + employee.BirthYear);
+            }
             EmployeeListBox.DataSource = employees;
 
 
-            var recipes = RetrieveRecipes(selectedRestaurant.Recipes);
+            var recipes = new BindingList<Recipe>();
+
+            foreach (var recipe in selectedRestaurant.Recipes)
+            {
+                recipes.Add(recipe);
+            }
             RecipeListBox.DataSource = recipes;
             RecipeListBox.DisplayMember = "Name";
         }

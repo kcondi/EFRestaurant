@@ -56,7 +56,7 @@ namespace EFRestaurant.Presentation
             var recipeToAdd = new Recipe
             {
                 Name = RecipeNameTextBoxAddRecipe.Text,
-                PreparationTime = int.Parse(HoursMaskedTextBoxAddRecipe.Text)*60+int.Parse(MinutesMaskedTextBoxAddRecipe.Text)
+                PreparationTime = (int)HoursNumericUpDown.Value*60+(int)MinutesNumericUpDown.Value
             };
 
             foreach(var ingredient in _ingredientsToAdd)

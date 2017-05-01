@@ -44,10 +44,12 @@
             this.AddNewIngredientTextBoxAddRecipe = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.DeleteIngredientButton = new System.Windows.Forms.Button();
-            this.HoursMaskedTextBoxAddRecipe = new System.Windows.Forms.MaskedTextBox();
-            this.MinutesMaskedTextBoxAddRecipe = new System.Windows.Forms.MaskedTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.HoursNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.MinutesNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.HoursNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MinutesNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -184,26 +186,10 @@
             this.DeleteIngredientButton.UseVisualStyleBackColor = true;
             this.DeleteIngredientButton.Click += new System.EventHandler(this.DeleteIngredientButton_Click);
             // 
-            // HoursMaskedTextBoxAddRecipe
-            // 
-            this.HoursMaskedTextBoxAddRecipe.Location = new System.Drawing.Point(128, 81);
-            this.HoursMaskedTextBoxAddRecipe.Mask = "00";
-            this.HoursMaskedTextBoxAddRecipe.Name = "HoursMaskedTextBoxAddRecipe";
-            this.HoursMaskedTextBoxAddRecipe.Size = new System.Drawing.Size(20, 20);
-            this.HoursMaskedTextBoxAddRecipe.TabIndex = 16;
-            // 
-            // MinutesMaskedTextBoxAddRecipe
-            // 
-            this.MinutesMaskedTextBoxAddRecipe.Location = new System.Drawing.Point(196, 81);
-            this.MinutesMaskedTextBoxAddRecipe.Mask = "00";
-            this.MinutesMaskedTextBoxAddRecipe.Name = "MinutesMaskedTextBoxAddRecipe";
-            this.MinutesMaskedTextBoxAddRecipe.Size = new System.Drawing.Size(22, 20);
-            this.MinutesMaskedTextBoxAddRecipe.TabIndex = 17;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(154, 84);
+            this.label7.Location = new System.Drawing.Point(176, 84);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(36, 13);
             this.label7.TabIndex = 18;
@@ -212,21 +198,47 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(224, 84);
+            this.label8.Location = new System.Drawing.Point(259, 84);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(43, 13);
             this.label8.TabIndex = 19;
             this.label8.Text = "minutes";
             // 
-            // Form6
+            // HoursNumericUpDown
+            // 
+            this.HoursNumericUpDown.Location = new System.Drawing.Point(128, 82);
+            this.HoursNumericUpDown.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.HoursNumericUpDown.Name = "HoursNumericUpDown";
+            this.HoursNumericUpDown.ReadOnly = true;
+            this.HoursNumericUpDown.Size = new System.Drawing.Size(42, 20);
+            this.HoursNumericUpDown.TabIndex = 20;
+            // 
+            // MinutesNumericUpDown
+            // 
+            this.MinutesNumericUpDown.Location = new System.Drawing.Point(211, 82);
+            this.MinutesNumericUpDown.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.MinutesNumericUpDown.Name = "MinutesNumericUpDown";
+            this.MinutesNumericUpDown.ReadOnly = true;
+            this.MinutesNumericUpDown.Size = new System.Drawing.Size(42, 20);
+            this.MinutesNumericUpDown.TabIndex = 21;
+            // 
+            // AddRecipeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(537, 376);
+            this.Controls.Add(this.MinutesNumericUpDown);
+            this.Controls.Add(this.HoursNumericUpDown);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.MinutesMaskedTextBoxAddRecipe);
-            this.Controls.Add(this.HoursMaskedTextBoxAddRecipe);
             this.Controls.Add(this.DeleteIngredientButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.AddNewIngredientTextBoxAddRecipe);
@@ -243,8 +255,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form6";
+            this.Name = "AddRecipeForm";
             this.Text = "Add recipe";
+            ((System.ComponentModel.ISupportInitialize)(this.HoursNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MinutesNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,9 +281,9 @@
         private System.Windows.Forms.TextBox AddNewIngredientTextBoxAddRecipe;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button DeleteIngredientButton;
-        private System.Windows.Forms.MaskedTextBox HoursMaskedTextBoxAddRecipe;
-        private System.Windows.Forms.MaskedTextBox MinutesMaskedTextBoxAddRecipe;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown HoursNumericUpDown;
+        private System.Windows.Forms.NumericUpDown MinutesNumericUpDown;
     }
 }
