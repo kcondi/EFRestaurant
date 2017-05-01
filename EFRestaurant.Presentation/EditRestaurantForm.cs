@@ -12,9 +12,9 @@ using EFRestaurant.Data.Models.Entities;
 
 namespace EFRestaurant.Presentation
 {
-    public partial class Form3 : Form
+    public partial class EditRestaurantForm : Form
     {
-        public Form3(RestaurantContext context, string restaurantToEdit)
+        public EditRestaurantForm(RestaurantContext context, string restaurantToEdit)
         {
             _context = context;
             _restaurantToEditName = restaurantToEdit;

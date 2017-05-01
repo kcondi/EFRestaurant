@@ -1,6 +1,6 @@
 ﻿namespace EFRestaurant.Presentation
 {
-    partial class Form3
+    partial class AddRestaurantForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,29 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.OkButtonEditRestaurant = new System.Windows.Forms.Button();
-            this.EditRestaurantTextBox = new System.Windows.Forms.TextBox();
-            this.KitchenModelComboBox = new System.Windows.Forms.ComboBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddRestaurantForm));
+            this.NewRestaurantTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.OkButtonNewRestaurant = new System.Windows.Forms.Button();
+            this.KitchenModelComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // OkButtonEditRestaurant
+            // NewRestaurantTextBox
             // 
-            this.OkButtonEditRestaurant.Location = new System.Drawing.Point(241, 103);
-            this.OkButtonEditRestaurant.Name = "OkButtonEditRestaurant";
-            this.OkButtonEditRestaurant.Size = new System.Drawing.Size(75, 23);
-            this.OkButtonEditRestaurant.TabIndex = 0;
-            this.OkButtonEditRestaurant.Text = "Ok";
-            this.OkButtonEditRestaurant.UseVisualStyleBackColor = true;
-            this.OkButtonEditRestaurant.Click += new System.EventHandler(this.OkButtonEditRestaurant_Click);
+            this.NewRestaurantTextBox.Location = new System.Drawing.Point(114, 25);
+            this.NewRestaurantTextBox.Name = "NewRestaurantTextBox";
+            this.NewRestaurantTextBox.Size = new System.Drawing.Size(140, 20);
+            this.NewRestaurantTextBox.TabIndex = 0;
             // 
-            // EditRestaurantTextBox
+            // label1
             // 
-            this.EditRestaurantTextBox.Location = new System.Drawing.Point(114, 25);
-            this.EditRestaurantTextBox.Name = "EditRestaurantTextBox";
-            this.EditRestaurantTextBox.Size = new System.Drawing.Size(140, 20);
-            this.EditRestaurantTextBox.TabIndex = 1;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(31, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Name:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // OkButtonNewRestaurant
+            // 
+            this.OkButtonNewRestaurant.Location = new System.Drawing.Point(241, 103);
+            this.OkButtonNewRestaurant.Name = "OkButtonNewRestaurant";
+            this.OkButtonNewRestaurant.Size = new System.Drawing.Size(75, 23);
+            this.OkButtonNewRestaurant.TabIndex = 2;
+            this.OkButtonNewRestaurant.Text = "Ok";
+            this.OkButtonNewRestaurant.UseVisualStyleBackColor = true;
+            this.OkButtonNewRestaurant.Click += new System.EventHandler(this.OkButtonNewRestaurant_Click);
             // 
             // KitchenModelComboBox
             // 
@@ -65,17 +76,7 @@
             this.KitchenModelComboBox.Location = new System.Drawing.Point(114, 66);
             this.KitchenModelComboBox.Name = "KitchenModelComboBox";
             this.KitchenModelComboBox.Size = new System.Drawing.Size(140, 21);
-            this.KitchenModelComboBox.TabIndex = 2;
-            this.KitchenModelComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Name:";
+            this.KitchenModelComboBox.TabIndex = 3;
             // 
             // label2
             // 
@@ -86,18 +87,19 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Kitchen model:";
             // 
-            // Form3
+            // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(340, 138);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.KitchenModelComboBox);
-            this.Controls.Add(this.EditRestaurantTextBox);
-            this.Controls.Add(this.OkButtonEditRestaurant);
-            this.Name = "Form3";
-            this.Text = "Edit selected restaurant";
+            this.Controls.Add(this.OkButtonNewRestaurant);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.NewRestaurantTextBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "Form2";
+            this.Text = "Add new restaurant";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,10 +107,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button OkButtonEditRestaurant;
-        private System.Windows.Forms.TextBox EditRestaurantTextBox;
-        private System.Windows.Forms.ComboBox KitchenModelComboBox;
+        private System.Windows.Forms.TextBox NewRestaurantTextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button OkButtonNewRestaurant;
+        private System.Windows.Forms.ComboBox KitchenModelComboBox;
         private System.Windows.Forms.Label label2;
     }
 }

@@ -13,9 +13,9 @@ using EFRestaurant.Data.Models.Entities;
 
 namespace EFRestaurant.Presentation
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             _context = new RestaurantContext();
@@ -46,7 +46,7 @@ namespace EFRestaurant.Presentation
 
         private void AddRestaurantButton_Click(object sender, EventArgs e)
         {
-            Form2 newRestaurantDialog= new Form2(_context);
+            var newRestaurantDialog= new AddRestaurantForm(_context);
             newRestaurantDialog.ShowDialog();
         }
 
@@ -106,13 +106,13 @@ namespace EFRestaurant.Presentation
 
         private void EditRestaurantButton_Click(object sender, EventArgs e)
         {
-            Form3 editRestaurantDialog = new Form3(_context,RestaurantListBox.Text);
+            var editRestaurantDialog = new EditRestaurantForm(_context,RestaurantListBox.Text);
             editRestaurantDialog.ShowDialog();
         }
 
         private void AddEmployeeButton_Click(object sender, EventArgs e)
         {
-            Form4 newEmployeeDialog=new Form4(_context,RestaurantListBox.Text);
+            var newEmployeeDialog=new AddEmployeeForm(_context,RestaurantListBox.Text);
             newEmployeeDialog.ShowDialog();
         }
 
@@ -128,13 +128,13 @@ namespace EFRestaurant.Presentation
 
         private void EditEmployeeButton_Click(object sender, EventArgs e)
         {
-            Form5 editEmployeeDialog=new Form5(_context,EmployeeListBox.Text,RestaurantListBox.Text);
+            var editEmployeeDialog=new EditEmployeeForm(_context,EmployeeListBox.Text,RestaurantListBox.Text);
             editEmployeeDialog.ShowDialog();
         }
 
         private void AddRecipeButton_Click(object sender, EventArgs e)
         {
-            Form6 addRecipeDialog = new Form6(_context,RestaurantListBox.Text);
+            var addRecipeDialog = new AddRecipeForm(_context,RestaurantListBox.Text);
             addRecipeDialog.ShowDialog();
         }
 

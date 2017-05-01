@@ -14,9 +14,9 @@ using EFRestaurant.Data.Models.Entities;
 
 namespace EFRestaurant.Presentation
 {
-    public partial class Form2 : Form
+    public partial class AddRestaurantForm : Form
     {
-        public Form2(RestaurantContext context)
+        public AddRestaurantForm(RestaurantContext context)
         {
             _context = context;
             InitializeComponent();

@@ -1,6 +1,6 @@
 ﻿namespace EFRestaurant.Presentation
 {
-    partial class Form6
+    partial class AddRecipeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddRecipeForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.RecipeNameTextBoxAddRecipe = new System.Windows.Forms.TextBox();
@@ -241,6 +242,7 @@
             this.Controls.Add(this.RecipeNameTextBoxAddRecipe);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form6";
             this.Text = "Add recipe";
             this.ResumeLayout(false);

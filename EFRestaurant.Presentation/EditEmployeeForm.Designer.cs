@@ -1,6 +1,6 @@
 ﻿namespace EFRestaurant.Presentation
 {
-    partial class Form5
+    partial class EditEmployeeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditEmployeeForm));
             this.OIBTextBoxEditEmployee = new System.Windows.Forms.TextBox();
             this.FirstNameTextBoxEditEmployee = new System.Windows.Forms.TextBox();
             this.LastNameTextBoxEditEmployee = new System.Windows.Forms.TextBox();
@@ -195,6 +196,7 @@
             this.Controls.Add(this.LastNameTextBoxEditEmployee);
             this.Controls.Add(this.FirstNameTextBoxEditEmployee);
             this.Controls.Add(this.OIBTextBoxEditEmployee);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form5";
             this.Text = "Edit employee";
             ((System.ComponentModel.ISupportInitialize)(this.BirthYearUpDownEditEmployee)).EndInit();
