@@ -53,7 +53,7 @@ namespace EFRestaurant.Presentation
         private void RestaurantListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedRestaurantName = RestaurantListBox.Text;
-            var selectedRestaurant = _context.Restaurants.FirstOrDefault(x => x.Name == selectedRestaurantName);
+            var selectedRestaurant = _context.Restaurants.Include(restaurant=>restaurant.Employees).FirstOrDefault(x => x.Name == selectedRestaurantName);
 
             if (selectedRestaurant == null) return;
 
@@ -63,7 +63,7 @@ namespace EFRestaurant.Presentation
 
             foreach (var employee in selectedRestaurant.Employees)
             {
-                employees.Add(employee);
+                    employees.Add(employee);
             }
             EmployeeListBox.DataSource = employees;
             EmployeeListBox.DisplayMember = "OIB";
