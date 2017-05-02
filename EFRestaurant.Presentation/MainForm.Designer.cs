@@ -38,7 +38,7 @@
             this.EditEmployeeButton = new System.Windows.Forms.Button();
             this.DeleteEmployeeButton = new System.Windows.Forms.Button();
             this.RecipeListBox = new System.Windows.Forms.ListBox();
-            this.AddRecipeButton = new System.Windows.Forms.Button();
+            this.ManageRecipeButton = new System.Windows.Forms.Button();
             this.DeleteRecipeButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -128,16 +128,17 @@
             this.RecipeListBox.TabIndex = 7;
             this.RecipeListBox.SelectedIndexChanged += new System.EventHandler(this.RecipeListBox_SelectedIndexChanged);
             // 
-            // AddRecipeButton
+            // ManageRecipeButton
             // 
-            this.AddRecipeButton.Location = new System.Drawing.Point(255, 320);
-            this.AddRecipeButton.Name = "AddRecipeButton";
-            this.AddRecipeButton.Size = new System.Drawing.Size(75, 23);
-            this.AddRecipeButton.TabIndex = 8;
-            this.AddRecipeButton.Text = "Add";
-            this.toolTip1.SetToolTip(this.AddRecipeButton, "Add a recipe to the selected restaurant.");
-            this.AddRecipeButton.UseVisualStyleBackColor = true;
-            this.AddRecipeButton.Click += new System.EventHandler(this.AddRecipeButton_Click);
+            this.ManageRecipeButton.Location = new System.Drawing.Point(255, 320);
+            this.ManageRecipeButton.Name = "ManageRecipeButton";
+            this.ManageRecipeButton.Size = new System.Drawing.Size(75, 23);
+            this.ManageRecipeButton.TabIndex = 8;
+            this.ManageRecipeButton.Text = "Manage";
+            this.toolTip1.SetToolTip(this.ManageRecipeButton, "Add a recipe to the selected restaurant, add and delete ingredients, delete recip" +
+        "es.");
+            this.ManageRecipeButton.UseVisualStyleBackColor = true;
+            this.ManageRecipeButton.Click += new System.EventHandler(this.ManageRecipeButton_Click);
             // 
             // DeleteRecipeButton
             // 
@@ -146,7 +147,7 @@
             this.DeleteRecipeButton.Size = new System.Drawing.Size(75, 23);
             this.DeleteRecipeButton.TabIndex = 10;
             this.DeleteRecipeButton.Text = "Delete";
-            this.toolTip1.SetToolTip(this.DeleteRecipeButton, "Delete the selected recipe.");
+            this.toolTip1.SetToolTip(this.DeleteRecipeButton, "Delete the selected recipe (but only from the restaurant).");
             this.DeleteRecipeButton.UseVisualStyleBackColor = true;
             this.DeleteRecipeButton.Click += new System.EventHandler(this.DeleteRecipeButton_Click);
             // 
@@ -245,7 +246,7 @@
             this.Controls.Add(this.AddRestaurantButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.DeleteRecipeButton);
-            this.Controls.Add(this.AddRecipeButton);
+            this.Controls.Add(this.ManageRecipeButton);
             this.Controls.Add(this.RecipeListBox);
             this.Controls.Add(this.DeleteEmployeeButton);
             this.Controls.Add(this.EditEmployeeButton);
@@ -273,7 +274,7 @@
         private System.Windows.Forms.Button EditEmployeeButton;
         private System.Windows.Forms.Button DeleteEmployeeButton;
         private System.Windows.Forms.ListBox RecipeListBox;
-        private System.Windows.Forms.Button AddRecipeButton;
+        private System.Windows.Forms.Button ManageRecipeButton;
         private System.Windows.Forms.Button DeleteRecipeButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolTip toolTip1;

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddRecipeForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,6 +49,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.HoursNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.MinutesNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.DeleteExistingRecipeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.HoursNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MinutesNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -152,7 +155,7 @@
             // 
             // AddExistingRecipeButton
             // 
-            this.AddExistingRecipeButton.Location = new System.Drawing.Point(397, 274);
+            this.AddExistingRecipeButton.Location = new System.Drawing.Point(390, 253);
             this.AddExistingRecipeButton.Name = "AddExistingRecipeButton";
             this.AddExistingRecipeButton.Size = new System.Drawing.Size(97, 62);
             this.AddExistingRecipeButton.TabIndex = 12;
@@ -183,6 +186,8 @@
             this.DeleteIngredientButton.Size = new System.Drawing.Size(143, 34);
             this.DeleteIngredientButton.TabIndex = 15;
             this.DeleteIngredientButton.Text = "Delete ingredient (permanently)";
+            this.toolTip1.SetToolTip(this.DeleteIngredientButton, "If an ingredient is added and deleted, it will be removed from every other recipe" +
+        ", but a new instance of it will be made and added to the current one.");
             this.DeleteIngredientButton.UseVisualStyleBackColor = true;
             this.DeleteIngredientButton.Click += new System.EventHandler(this.DeleteIngredientButton_Click);
             // 
@@ -230,11 +235,26 @@
             this.MinutesNumericUpDown.Size = new System.Drawing.Size(42, 20);
             this.MinutesNumericUpDown.TabIndex = 21;
             // 
+            // toolTip1
+            // 
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
+            // 
+            // DeleteExistingRecipeButton
+            // 
+            this.DeleteExistingRecipeButton.Location = new System.Drawing.Point(390, 321);
+            this.DeleteExistingRecipeButton.Name = "DeleteExistingRecipeButton";
+            this.DeleteExistingRecipeButton.Size = new System.Drawing.Size(97, 31);
+            this.DeleteExistingRecipeButton.TabIndex = 22;
+            this.DeleteExistingRecipeButton.Text = "Delete recipe";
+            this.DeleteExistingRecipeButton.UseVisualStyleBackColor = true;
+            this.DeleteExistingRecipeButton.Click += new System.EventHandler(this.DeleteExistingRecipeButton_Click);
+            // 
             // AddRecipeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(537, 376);
+            this.Controls.Add(this.DeleteExistingRecipeButton);
             this.Controls.Add(this.MinutesNumericUpDown);
             this.Controls.Add(this.HoursNumericUpDown);
             this.Controls.Add(this.label8);
@@ -285,5 +305,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown HoursNumericUpDown;
         private System.Windows.Forms.NumericUpDown MinutesNumericUpDown;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button DeleteExistingRecipeButton;
     }
 }

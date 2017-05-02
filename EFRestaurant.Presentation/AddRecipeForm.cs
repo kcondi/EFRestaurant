@@ -132,5 +132,35 @@ namespace EFRestaurant.Presentation
             var ingredients = RetrieveIngredients();
             ExistingIngredientsListBox.DataSource = ingredients;
         }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void DeleteExistingRecipeButton_Click(object sender, EventArgs e)
+        {
+            var restaurantOfRecipe = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == _restaurantOfRecipeName);
+
+            if (restaurantOfRecipe == null)
+            {
+                Close();
+                return;
+            }
+
+            var existingRecipeToDelete = _context.Recipes.FirstOrDefault(recipe => recipe.Name == ExistingRecipesListBox.Text);
+
+            if (existingRecipeToDelete == null)
+            {
+                Close();
+                return;
+            }
+
+            _context.Recipes.Remove(existingRecipeToDelete);
+
+            _context.SaveChanges();
+
+            Close();
+        }
     }
 }

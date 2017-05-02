@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
-using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Forms;
 using EFRestaurant.Data.Models;
@@ -21,6 +18,9 @@ namespace EFRestaurant.Presentation
             var restaurants = RetrieveRestaurants();
 
             RestaurantListBox.DataSource = restaurants;
+            RestaurantListBox.DisplayMember = "Name";
+
+            RestaurantListBox.DataSource = _context.Restaurants.Local.ToBindingList();
             RestaurantListBox.DisplayMember = "Name";
         }
 
@@ -51,9 +51,9 @@ namespace EFRestaurant.Presentation
             var newRestaurantDialog= new AddRestaurantForm(_context);
             newRestaurantDialog.ShowDialog();
 
-            var restaurants = RetrieveRestaurants();
-
-            RestaurantListBox.DataSource = restaurants;
+            /*    var restaurants = RetrieveRestaurants();
+                  RestaurantListBox.DataSource = restaurants;
+                  RestaurantListBox.DisplayMember="Name"; */
         }
 
 
@@ -118,10 +118,9 @@ namespace EFRestaurant.Presentation
             _context.Restaurants.Remove(restaurantToDelete);
             _context.SaveChanges();
 
-            var restaurants = RetrieveRestaurants();
-
-            RestaurantListBox.DataSource = restaurants;
-            RestaurantListBox.DisplayMember = "Name";
+            /*  var restaurants = RetrieveRestaurants();
+              RestaurantListBox.DataSource = restaurants;
+              RestaurantListBox.DisplayMember = "Name"; */
         }
 
         private void EditRestaurantButton_Click(object sender, EventArgs e)
@@ -132,10 +131,14 @@ namespace EFRestaurant.Presentation
             var editRestaurantDialog = new EditRestaurantForm(_context,RestaurantListBox.Text);
             editRestaurantDialog.ShowDialog();
 
-            var restaurants = RetrieveRestaurants();
-
-            RestaurantListBox.DataSource = restaurants;
+            RestaurantListBox.DataSource = null;
+            RestaurantListBox.DataSource = _context.Restaurants.Local.ToBindingList();
             RestaurantListBox.DisplayMember = "Name";
+
+            /* var restaurants = RetrieveRestaurants();
+             RestaurantListBox.DataSource = restaurants;
+             RestaurantListBox.DisplayMember = "Name"; */
+
         }
 
         private void AddEmployeeButton_Click(object sender, EventArgs e)
@@ -171,7 +174,7 @@ namespace EFRestaurant.Presentation
             editEmployeeDialog.ShowDialog();
         }
 
-        private void AddRecipeButton_Click(object sender, EventArgs e)
+        private void ManageRecipeButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(RestaurantListBox.Text))
                 return;
@@ -185,13 +188,20 @@ namespace EFRestaurant.Presentation
             if (string.IsNullOrEmpty(RecipeListBox.Text))
                 return;
 
+            var selectedRestaurantName = RestaurantListBox.Text;
+            var selectedRestaurant =
+                _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == selectedRestaurantName);
+
+            if (selectedRestaurant == null)
+                return;
+
             var selectedRecipeName = RecipeListBox.Text;
             var recipeToDelete = _context.Recipes.FirstOrDefault(recipe => recipe.Name == selectedRecipeName);
 
             if (recipeToDelete == null)
                 return;
 
-            _context.Recipes.Remove(recipeToDelete);
+            selectedRestaurant.Recipes.Remove(recipeToDelete);
             _context.SaveChanges();
         }
     }
