@@ -1,50 +1,33 @@
 ﻿using System;
 using System.Windows.Forms;
-using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
+using EFRestaurant.Domain.Repositories;
 
 namespace EFRestaurant.Presentation
 {
     public partial class AddRestaurantForm : Form
     {
-        public AddRestaurantForm(RestaurantContext context)
+        public AddRestaurantForm()
         {
             InitializeComponent();
-
-            _context = context;
-
+            _restaurantRepository = new RestaurantRepository();
             KitchenModelComboBox.SelectedIndex = 0;
         }
+        private readonly RestaurantRepository _restaurantRepository;
 
-        private readonly RestaurantContext _context;
         private void OkButtonNewRestaurant_Click(object sender, EventArgs e)
         {
-            var newRestaurantName = NewRestaurantTextBox.Text;
-
-            if (string.IsNullOrEmpty(newRestaurantName))
+            var restaurantToAdd = new Restaurant()
             {
-                Close();
-                return;
-            }
-
-            var newRestaurant = new Restaurant
-            {
-                Name = newRestaurantName,
+                Name = NewRestaurantTextBox.Text,
+                KitchenModel = _restaurantRepository.GetKitchenModel(KitchenModelComboBox.SelectedIndex+1)
             };
-
-            var kitchenModel = _context.KitchenModels.Find(KitchenModelComboBox.SelectedIndex+1);
-
-            if (kitchenModel == null)
+            if (string.IsNullOrEmpty(restaurantToAdd.Name))
             {
                 Close();
                 return;
             }
-
-            kitchenModel.Restaurants.Add(newRestaurant);
-
-            _context.Restaurants.Add(newRestaurant);
-            _context.SaveChanges();
-        
+            _restaurantRepository.AddRestaurant(restaurantToAdd);     
             Close();
         }
     }

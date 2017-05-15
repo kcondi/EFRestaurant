@@ -9,13 +9,8 @@ namespace EFRestaurant.Data.Models.Entities
             Restaurants=new HashSet<Restaurant>();
         }
         public int Id { get; set; }
-
         public string Name { get; set; }
-
         public int Price { get; set; }
-
         public ICollection<Restaurant> Restaurants { get; set; }
-
-
     }
 }

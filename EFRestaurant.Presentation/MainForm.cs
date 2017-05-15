@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Data.Entity;
-using System.Linq;
 using System.Windows.Forms;
-using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
+using EFRestaurant.Domain.Repositories;
 
 namespace EFRestaurant.Presentation
 {
@@ -13,34 +11,21 @@ namespace EFRestaurant.Presentation
         public MainForm()
         {
             InitializeComponent();
-            _context = new RestaurantContext();
-
-            var restaurants = RetrieveRestaurants();
-
-            RestaurantListBox.DataSource = restaurants;
-            RestaurantListBox.DisplayMember = "Name";
-
-            RestaurantListBox.DataSource = _context.Restaurants.Local.ToBindingList();
+            _restaurantRepository=new RestaurantRepository();
+            _employeeRepository=new EmployeeRepository();
+            _recipeRepository=new RecipeRepository();
+            RestaurantListBox.DataSource = _restaurantRepository.GetAllRestaurants();
             RestaurantListBox.DisplayMember = "Name";
         }
+        private readonly RestaurantRepository _restaurantRepository;
+        private readonly EmployeeRepository _employeeRepository;
+        private readonly RecipeRepository _recipeRepository;
 
-        private readonly RestaurantContext _context;
-
-        private BindingList<Restaurant> RetrieveRestaurants()
-        {
-            var restaurants = new BindingList<Restaurant>();
-
-        foreach (var restaurant in _context.Restaurants)
-        {
-            restaurants.Add(restaurant);
-        }
-
-        return restaurants;
-        }
         private void MainForm_Load(object sender, EventArgs e)
         {
             
         }
+
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
@@ -48,42 +33,32 @@ namespace EFRestaurant.Presentation
 
         private void AddRestaurantButton_Click(object sender, EventArgs e)
         {
-            var newRestaurantDialog= new AddRestaurantForm(_context);
+            var newRestaurantDialog= new AddRestaurantForm();
             newRestaurantDialog.ShowDialog();
-
-            /*    var restaurants = RetrieveRestaurants();
-                  RestaurantListBox.DataSource = restaurants;
-                  RestaurantListBox.DisplayMember="Name"; */
+            RestaurantListBox.DataSource = _restaurantRepository.GetAllRestaurants();
         }
-
 
         private void RestaurantListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             IngredientsList.Clear();
-
-            var selectedRestaurantName = RestaurantListBox.Text;
-            var selectedRestaurant = _context.Restaurants.Include(restaurant => restaurant.Employees).Include(restaurant => restaurant.Recipes).FirstOrDefault(restaurant => restaurant.Name == selectedRestaurantName);
-
+            var selectedRestaurant = _restaurantRepository.LoadRestaurants(RestaurantListBox.Text);
             if (selectedRestaurant == null)
                 return;
 
             KitchenModelLabel.Text = selectedRestaurant.KitchenModel.Name + ", price: " + selectedRestaurant.KitchenModel.Price;
 
             var employees = new BindingList<string>();
-
             foreach (var employee in selectedRestaurant.Employees)
-            {
-                employees.Add(employee.OIB + " " + employee.FirstName + " " + employee.LastName + " " + employee.BirthYear);
-            }
+                {
+                    employees.Add($"{employee.OIB} {employee.FirstName} {employee.LastName} {employee.BirthYear}");
+                }
             EmployeeListBox.DataSource = employees;
 
-
             var recipes = new BindingList<Recipe>();
-
             foreach (var recipe in selectedRestaurant.Recipes)
-            {
-                recipes.Add(recipe);
-            }
+               {
+                   recipes.Add(recipe);
+               }
             RecipeListBox.DataSource = recipes;
             RecipeListBox.DisplayMember = "Name";
         }
@@ -91,13 +66,9 @@ namespace EFRestaurant.Presentation
         private void RecipeListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             IngredientsList.Clear();
-
-            var selectedRecipeName = RecipeListBox.Text;
-            var selectedRecipe = _context.Recipes.Include(recipe=>recipe.Ingredients).FirstOrDefault(recipe => recipe.Name == selectedRecipeName);
-
+            var selectedRecipe = _recipeRepository.GetRecipe(RecipeListBox.Text);
             if (selectedRecipe == null)
                 return;
-
             foreach (var ingredient in selectedRecipe.Ingredients)
             {
                 IngredientsList.Items.Add(ingredient.Name);
@@ -106,103 +77,62 @@ namespace EFRestaurant.Presentation
 
         private void DeleteRestaurantButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(RestaurantListBox.Text))
-                return;
-
-            var selectedRestaurantName = RestaurantListBox.Text;
-            var restaurantToDelete = _context.Restaurants.FirstOrDefault(restaurant=>restaurant.Name==selectedRestaurantName);
-
-            if (restaurantToDelete == null)
-                return;
-
-            _context.Restaurants.Remove(restaurantToDelete);
-            _context.SaveChanges();
-
-            /*  var restaurants = RetrieveRestaurants();
-              RestaurantListBox.DataSource = restaurants;
-              RestaurantListBox.DisplayMember = "Name"; */
+            _restaurantRepository.DeleteRestaurant(RestaurantListBox.Text);
+            RestaurantListBox.DataSource = _restaurantRepository.GetAllRestaurants();
         }
 
         private void EditRestaurantButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(RestaurantListBox.Text))
                 return;
-
-            var editRestaurantDialog = new EditRestaurantForm(_context,RestaurantListBox.Text);
+            var editRestaurantDialog = new EditRestaurantForm(RestaurantListBox.Text);
             editRestaurantDialog.ShowDialog();
-
             RestaurantListBox.DataSource = null;
-            RestaurantListBox.DataSource = _context.Restaurants.Local.ToBindingList();
+            RestaurantListBox.DataSource = _restaurantRepository.GetAllRestaurants();
             RestaurantListBox.DisplayMember = "Name";
-
-            /* var restaurants = RetrieveRestaurants();
-             RestaurantListBox.DataSource = restaurants;
-             RestaurantListBox.DisplayMember = "Name"; */
-
         }
 
         private void AddEmployeeButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(RestaurantListBox.Text))
                 return;
-
-            var newEmployeeDialog=new AddEmployeeForm(_context,RestaurantListBox.Text);
+            var newEmployeeDialog=new AddEmployeeForm(RestaurantListBox.Text);
             newEmployeeDialog.ShowDialog();
+            RestaurantListBox_SelectedIndexChanged(sender, e);
         }
 
         private void DeleteEmployeeButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(EmployeeListBox.Text))
-                return;
-
-            var selectedEmployeeOIB = EmployeeListBox.Text.Substring(0,EmployeeListBox.Text.IndexOf(' '));
-            var employeeToDelete = _context.Employees.Find(selectedEmployeeOIB);
-
-            if (employeeToDelete == null)
-                return;
-
-            _context.Employees.Remove(employeeToDelete);
-            _context.SaveChanges();
+                return;        
+            _employeeRepository.DeleteEmployee(EmployeeListBox.Text.Substring(0, EmployeeListBox.Text.IndexOf(' ')));
+            RestaurantListBox_SelectedIndexChanged(sender,e);
         }
 
         private void EditEmployeeButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(EmployeeListBox.Text))
                 return;
-
-            var editEmployeeDialog=new EditEmployeeForm(_context,EmployeeListBox.Text,RestaurantListBox.Text);
+            var editEmployeeDialog=new EditEmployeeForm(EmployeeListBox.Text);
             editEmployeeDialog.ShowDialog();
+            RestaurantListBox_SelectedIndexChanged(sender,e);
         }
 
         private void ManageRecipeButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(RestaurantListBox.Text))
                 return;
-
-            var addRecipeDialog = new AddRecipeForm(_context,RestaurantListBox.Text);
+            var addRecipeDialog=new AddRecipeForm(RestaurantListBox.Text);
             addRecipeDialog.ShowDialog();
+            RestaurantListBox_SelectedIndexChanged(sender, e);
         }
 
         private void DeleteRecipeButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(RecipeListBox.Text))
-                return;
-
-            var selectedRestaurantName = RestaurantListBox.Text;
-            var selectedRestaurant =
-                _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == selectedRestaurantName);
-
-            if (selectedRestaurant == null)
-                return;
-
-            var selectedRecipeName = RecipeListBox.Text;
-            var recipeToDelete = _context.Recipes.FirstOrDefault(recipe => recipe.Name == selectedRecipeName);
-
-            if (recipeToDelete == null)
-                return;
-
-            selectedRestaurant.Recipes.Remove(recipeToDelete);
-            _context.SaveChanges();
+                return;           
+            _restaurantRepository.RemoveRecipe(RestaurantListBox.Text,RecipeListBox.Text);
+            RestaurantListBox_SelectedIndexChanged(sender, e);
         }
     }
 }

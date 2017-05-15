@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
-using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
+using EFRestaurant.Domain.Repositories;
 
 namespace EFRestaurant.Presentation
 {
     public partial class AddEmployeeForm : Form
     {
-        public AddEmployeeForm(RestaurantContext context, string restaurantOfEmployee )
+        public AddEmployeeForm(string selectedRestaurantName)
         {
             InitializeComponent();
-
-            _context = context;
-            _restaurantOfEmployeeName = restaurantOfEmployee;
-
+            _employeeRepository=new EmployeeRepository();
+            _restaurantOfEmployeeName=selectedRestaurantName;
             MasterChefRadioAddEmployee.Checked = true;
+            ActiveControl = OIBMaskedTextBoxAddEmployee;
         }
-
-        private readonly RestaurantContext _context;
+        private readonly EmployeeRepository _employeeRepository;
         private readonly string _restaurantOfEmployeeName;
 
         private void OkButtonAddEmployee_Click(object sender, EventArgs e)
@@ -26,39 +23,27 @@ namespace EFRestaurant.Presentation
             if (string.IsNullOrEmpty(OIBMaskedTextBoxAddEmployee.Text))
                 MessageBox.Show("OIB is a required field!");
             else if (OIBMaskedTextBoxAddEmployee.Text.Length != 11)
-                MessageBox.Show("An OIB must have 11 characters!");
+                MessageBox.Show("An OIB must have 11 numbers!");
             else if (string.IsNullOrEmpty(LastNameTextBoxAddEmployee.Text))
                 MessageBox.Show("Last name is a required field!");
             else
             {
-                var restaurantOfEmployee = _context.Restaurants.FirstOrDefault(restaurant => restaurant.Name == _restaurantOfEmployeeName);
-
-                if (restaurantOfEmployee == null)
-                {
-                    Close();
-                    return;
-                }
-
                 var employeeToAdd = new Employee
                 {
                     OIB = OIBMaskedTextBoxAddEmployee.Text,
                     FirstName = FirstNameTextBoxAddEmployee.Text,
                     LastName = LastNameTextBoxAddEmployee.Text,
-                    BirthYear = (int)BirthYearUpDownAddEmployee.Value   
+                    BirthYear = (int)BirthYearUpDownAddEmployee.Value,
+                    Restaurant = _employeeRepository.GetRestaurant(_restaurantOfEmployeeName)
                 };
-
                 if (MasterChefRadioAddEmployee.Checked)
                     employeeToAdd.EmployeeRole = Roles.MainChef;
                 else if (AssistantChefRadioAddEmployee.Checked)
                     employeeToAdd.EmployeeRole = Roles.AssistantChef;
                 else
-                    employeeToAdd.EmployeeRole = Roles.Waiter;             
+                    employeeToAdd.EmployeeRole = Roles.Waiter;
 
-                restaurantOfEmployee.Employees.Add(employeeToAdd);
-                _context.Employees.Add(employeeToAdd);
-
-                _context.SaveChanges();
-
+                _employeeRepository.AddEmployee(employeeToAdd);          
                 Close();
             }
         }
