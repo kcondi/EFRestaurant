@@ -16,19 +16,20 @@ namespace EFRestaurant.Presentation
         private readonly RestaurantRepository _restaurantRepository;
 
         private void OkButtonNewRestaurant_Click(object sender, EventArgs e)
-        {
-            var restaurantToAdd = new Restaurant()
+        {          
+            if (string.IsNullOrEmpty(NewRestaurantTextBox.Text))
+                MessageBox.Show("The restaurant must have a name!");
+            else
             {
-                Name = NewRestaurantTextBox.Text,
-                KitchenModel = _restaurantRepository.GetKitchenModel(KitchenModelComboBox.SelectedIndex+1)
-            };
-            if (string.IsNullOrEmpty(restaurantToAdd.Name))
-            {
+                var restaurantToAdd = new Restaurant()
+                {
+                    Name = NewRestaurantTextBox.Text,
+                    KitchenModel = _restaurantRepository.GetKitchenModel(KitchenModelComboBox.SelectedIndex + 1)
+                };
+                _restaurantRepository.AddRestaurant(restaurantToAdd);
                 Close();
-                return;
             }
-            _restaurantRepository.AddRestaurant(restaurantToAdd);     
-            Close();
+
         }
     }
 }

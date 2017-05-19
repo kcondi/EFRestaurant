@@ -53,14 +53,19 @@ namespace EFRestaurant.Presentation
 
         private void AddNewIngredientButtonAddRecipe_Click(object sender, EventArgs e)
         {
-            var newIngredientToAdd = new Ingredient
+            if (string.IsNullOrEmpty(AddNewIngredientTextBoxAddRecipe.Text))
+                MessageBox.Show("An ingredient must have a name!");
+            else
             {
-                Name = AddNewIngredientTextBoxAddRecipe.Text
-            };
-            _ingredientsToAdd.Add(newIngredientToAdd);
-            _recipeRepository.AddIngredient(newIngredientToAdd);
-            AddNewIngredientTextBoxAddRecipe.Clear();
-            ExistingIngredientsListBox.DataSource = _recipeRepository.GetAllIngredients();
+                var newIngredientToAdd = new Ingredient
+                {
+                    Name = AddNewIngredientTextBoxAddRecipe.Text
+                };
+                _ingredientsToAdd.Add(newIngredientToAdd);
+                _recipeRepository.AddIngredient(newIngredientToAdd);
+                AddNewIngredientTextBoxAddRecipe.Clear();
+                ExistingIngredientsListBox.DataSource = _recipeRepository.GetAllIngredients();
+            }
         }
 
         private void AddExistingRecipeButton_Click(object sender, EventArgs e)
