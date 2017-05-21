@@ -12,7 +12,7 @@ namespace EFRestaurant.Data.Models.Entities
     {
         [Key]
         [Required]
-        [MaxLength(11),MinLength(11)]
+        [StringLength(11)]
         public string OIB { get; set; }
         public string FirstName { get; set; }
         [Required]

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using EFRestaurant.Data.Models;
@@ -14,15 +14,9 @@ namespace EFRestaurant.Domain.Repositories
         }
         private readonly RestaurantContext _context;
 
-        public BindingList<Restaurant> GetAllRestaurants()
+        public List<string> GetAllRestaurants()
         {
-            var refreshedContext=new RestaurantContext();
-            var restaurants = new BindingList<Restaurant>();
-            foreach (var restaurant in refreshedContext.Restaurants)
-            {
-                restaurants.Add(restaurant);
-            }
-            return restaurants;
+            return _context.Restaurants.AsNoTracking().Select(restaurant => restaurant.Name).ToList();
         }
 
         public Restaurant GetRestaurant(string restaurantName)
@@ -68,10 +62,13 @@ namespace EFRestaurant.Domain.Repositories
             _context.SaveChanges();
         }
 
-        public Restaurant LoadRestaurants(string selectedRestaurantName)
+        public Restaurant LoadRestaurantData(string selectedRestaurantName)
         {
-            var refreshedContext=new RestaurantContext();
-            return refreshedContext.Restaurants.Include(restaurant => restaurant.Employees).Include(restaurant => restaurant.Recipes).Include(restaurant => restaurant.KitchenModel).FirstOrDefault(restaurant => restaurant.Name == selectedRestaurantName);
+            return _context.Restaurants.AsNoTracking()
+                .Include(restaurant => restaurant.Employees)
+                .Include(restaurant => restaurant.Recipes)
+                .Include(restaurant => restaurant.KitchenModel)
+                .FirstOrDefault(restaurant => restaurant.Name == selectedRestaurantName);
         }
     }
 }

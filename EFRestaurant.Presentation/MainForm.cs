@@ -26,11 +26,6 @@ namespace EFRestaurant.Presentation
             
         }
 
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
         private void AddRestaurantButton_Click(object sender, EventArgs e)
         {
             var newRestaurantDialog= new AddRestaurantForm();
@@ -41,11 +36,11 @@ namespace EFRestaurant.Presentation
         private void RestaurantListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             IngredientsList.Clear();
-            var selectedRestaurant = _restaurantRepository.LoadRestaurants(RestaurantListBox.Text);
+            var selectedRestaurant = _restaurantRepository.LoadRestaurantData(RestaurantListBox.Text);
             if (selectedRestaurant == null)
                 return;
 
-            KitchenModelLabel.Text = selectedRestaurant.KitchenModel.Name + ", price: " + selectedRestaurant.KitchenModel.Price;
+            KitchenModelLabel.Text = $@"{selectedRestaurant.KitchenModel.Name}, price: {selectedRestaurant.KitchenModel.Price}";
 
             var employees = new BindingList<string>();
             foreach (var employee in selectedRestaurant.Employees)

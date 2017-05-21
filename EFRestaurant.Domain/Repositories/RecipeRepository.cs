@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using EFRestaurant.Data.Models;
 using EFRestaurant.Data.Models.Entities;
@@ -14,20 +15,14 @@ namespace EFRestaurant.Domain.Repositories
         }
         private readonly RestaurantContext _context;
 
-        public BindingList<string> GetAllExistingRecipes()
+        public List<string> GetAllExistingRecipes()
         {
-            var recipes = new BindingList<string>();
-            foreach (var recipe in _context.Recipes)
-            {
-                recipes.Add(recipe.Name);
-            }
-            return recipes;
+            return _context.Recipes.Select(recipe => recipe.Name).ToList();
         }
 
         public Recipe GetRecipe(string recipeName)
         {
-            var refreshedContext=new RestaurantContext();
-            return refreshedContext.Recipes.Include(x => x.Ingredients).FirstOrDefault(recipe => recipe.Name == recipeName);
+            return _context.Recipes.AsNoTracking().Include(x => x.Ingredients).FirstOrDefault(recipe => recipe.Name == recipeName);
         }
 
         public Ingredient GetIngredient(string ingredientName)
@@ -65,14 +60,9 @@ namespace EFRestaurant.Domain.Repositories
             _context.SaveChanges();
         }
 
-        public BindingList<string> GetAllIngredients()
+        public List<string> GetAllIngredients()
         {
-            var ingredients = new BindingList<string>();
-            foreach (var ingredient in _context.Ingredients)
-            {
-                ingredients.Add(ingredient.Name);
-            }
-            return ingredients;
+            return _context.Ingredients.Select(ingredient => ingredient.Name).ToList();
         }
 
         public Restaurant GetRestaurant(string restaurantName)

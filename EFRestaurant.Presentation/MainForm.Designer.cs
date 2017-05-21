@@ -160,10 +160,6 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "Recipes in the selected restaurant:";
             // 
-            // toolTip1
-            // 
-            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
-            // 
             // AddRestaurantButton
             // 
             this.AddRestaurantButton.Location = new System.Drawing.Point(44, 285);
