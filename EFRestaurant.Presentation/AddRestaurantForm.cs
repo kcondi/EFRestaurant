@@ -11,9 +11,13 @@ namespace EFRestaurant.Presentation
         {
             InitializeComponent();
             _restaurantRepository = new RestaurantRepository();
+            _kitchenRepository = new Domain.Repositories.KitchenRepository();
             KitchenModelComboBox.SelectedIndex = 0;
         }
         private readonly RestaurantRepository _restaurantRepository;
+        private readonly KitchenRepository _kitchenRepository;
+
+        public KitchenRepository KitchenRepository => _kitchenRepository;
 
         private void OkButtonNewRestaurant_Click(object sender, EventArgs e)
         {          
@@ -24,7 +28,7 @@ namespace EFRestaurant.Presentation
                 var restaurantToAdd = new Restaurant()
                 {
                     Name = NewRestaurantTextBox.Text,
-                    KitchenModel = _restaurantRepository.GetKitchenModel(KitchenModelComboBox.SelectedIndex + 1)
+                    KitchenModel = _kitchenRepository.GetKitchenModel(KitchenModelComboBox.SelectedIndex + 1)
                 };
                 _restaurantRepository.AddRestaurant(restaurantToAdd);
                 Close();
